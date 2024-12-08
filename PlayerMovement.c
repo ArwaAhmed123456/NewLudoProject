@@ -234,9 +234,6 @@ void moveToken(int *currPosition, char *tempTile, char tokenChar, int* tokenTowe
 
         tokenOnTop(currentRow, currentCol, tokenChar, tempTile, tokenTowerPosition);
 
-        // Save the current position before moving
-        int previousPosition = *currPosition;
-
         // Clear the current position
         grid[currentRow][currentCol] = *tempTile;
 
@@ -246,8 +243,8 @@ void moveToken(int *currPosition, char *tempTile, char tokenChar, int* tokenTowe
         // Place token at the new position
         int newRow = pathway[*currPosition][0];
         int newCol = pathway[*currPosition][1];
-
-        // Check if a kill happens
+        
+        
         int kill = tokenkill(newRow, newCol, tokenChar);  // Only call once
         *tokenTowerPosition = kill;  // Use it to update tokenTowerPosition
         
@@ -255,34 +252,50 @@ void moveToken(int *currPosition, char *tempTile, char tokenChar, int* tokenTowe
         printf("kill value after tokenkill: %d\n", kill);
 
         if (kill == 1) {
-            // Token kill occurred, handle the post-kill logic
+             // Token kill occurred, handle the post-kill logic
+              printf("Token kill detected. Player %c needs to handle the aftermath.\n", tokenChar);
+}
+
+        // =================================================================
+        // If a token was killed, handle it accordingly
+        if (*tokenTowerPosition == 1) {
+            // If token kill occurs, handle the post-kill logic here
             printf("Token kill detected. Player %c needs to handle the aftermath.\n", tokenChar);
         }
-
-        // Prevent movement if the kill happened
-        if (kill == 1) {
-            // Revert to the previous position if a kill occurs
-            *currPosition = previousPosition;
-            printf("Player %c stays at position (%d, %d) after kill.\n", tokenChar, currentRow, currentCol);
-
-            // Allow for token's inner home logic to proceed
-            if (isAllowedToEnterPath(newRow, newCol, tokenChar)) {
-                printf("Player %c stays at position (%d, %d) due to inner home constraint.\n", tokenChar, currentRow, currentCol);
+        // ===================================================================
+        
+        
+         // Check if the player is entering an inner path that doesn't belong to them
+        if (kill == 1){
+              
+          if (isAllowedToEnterPath(newRow, newCol, tokenChar)){
+    
+          printf("Player %c stays at position (%d, %d)\n", tokenChar, currentRow, currentCol);
+    
+    
+          printf("Player %c stays at position (%d, %d)\n", tokenChar, currentRow, currentCol);
+            
+             // Correctly revert the position
+           //*currPosition = (*currPosition - steps + pathwayLength) % pathwayLength;
+            
+  printf("AFTER: Player %c stays at position (%d, %d)\n", tokenChar, currentRow, currentCol);
+            pthread_mutex_unlock(&lock);  // Unlock the mutex before returning
+            return;  // Stop the function to prevent further movement
             }
-
-            pthread_mutex_unlock(&lock);
-            return;  // Exit the function to stop further movement
         }
+        
 
-        // stores value of the tile before going to it's position
+        // stores value of the tile before going to it's postion
         *tempTile = grid[newRow][newCol];
-
         // Place token at the new position
         grid[newRow][newCol] = tokenChar;
 
         printf("Player %c moved to position (%d, %d)\n(for testing: tempTile:%c)\n", tokenChar, newRow, newCol, *tempTile);
+        
     }
+    
+    //FOR DEBUGGING
+    
 
     pthread_mutex_unlock(&lock);
 }
-

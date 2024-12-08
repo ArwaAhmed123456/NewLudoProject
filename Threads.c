@@ -38,6 +38,9 @@ char tokenCharC[4] = {'c', 'v', 'f', 'g'};
 // D = Green
 char tokenCharD[4] = {'d', 'e', 'r', 't'}; 
 
+// Declare the function prototypes before using them
+void movePlayerWithPathway(char tokenChar);
+void moveToken(int *currPosition, char *tempTile, char tokenChar, int* tokenTowerPosition, int steps);
 
 
 void initializePlayerArgs()
@@ -166,12 +169,13 @@ int tokenkill(int newRow, int newCol, int tokenChar)
         case 'a':
         if(*(tokenA[0].tempTile)=='S'||*(tokenA[0].tempTile)=='A'||*(tokenA[0].tempTile)=='B'||*(tokenA[0].tempTile)=='C'||*(tokenA[0].tempTile)=='D'||*(tokenA[0].tokenTowerPosition)>0)
         {return *(tokenA[0].tokenTowerPosition);}
+        
             grid[newRow][newCol] = *(tokenA[0].tempTile);
             tokenA[0].tempTile = &tempA[0];
             currPositionA[0] = -1; // Reset position for Player A first token
             grid[1][1] = 'a';
             printf("\nPlayer %c has killed the token of Player A\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 'b':
@@ -182,7 +186,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionB[0] = -1;
             grid[1][11] = 'b';
             printf("\nPlayer %c has killed the token of Player B\n", tokenChar);
-           return 0;
+           return 1;
            break;
 
         case 'c':
@@ -193,7 +197,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionC[0] = -1; // Reset Player C's first token position
             grid[11][1] = 'c';
             printf("\nPlayer %c has killed the token of Player C\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 'd':
@@ -204,7 +208,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionD[0] = -1; // Reset Player D's first token position
             grid[11][11] = 'd';
             printf("\nPlayer %c has killed the token of Player D\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         // tokens at index 1
@@ -216,7 +220,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionA[1] = -1; // Reset position for Player A first token
             grid[1][3] = 's';
             printf("\nPlayer %c has killed the token of Player A\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 'n':
@@ -227,7 +231,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionB[1] = -1;
             grid[1][13] = 'n';
             printf("\nPlayer %c has killed the token of Player B\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 'v':
@@ -238,7 +242,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionC[1] = -1; // Reset Player C's first token position
             grid[11][3] = 'v';
             printf("\nPlayer %c has killed the token of Player C\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 'e':
@@ -249,7 +253,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionD[1] = -1; // Reset Player D's first token position
             grid[11][13] = 'e';
             printf("\nPlayer %c has killed the token of Player D\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         // tokens at index 2
@@ -261,7 +265,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionA[2] = -1; // Reset position for Player A first token
             grid[3][1] = 'q';
             printf("\nPlayer %c has killed the token of Player A\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 'j':
@@ -272,7 +276,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionB[2] = -1;
             grid[3][11] = 'j';
             printf("\nPlayer %c has killed the token of Player B\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 'f':
@@ -283,7 +287,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionC[2] = -1; // Reset Player C's first token position
             grid[13][1] = 'f';
             printf("\nPlayer %c has killed the token of Player C\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 'r':
@@ -294,7 +298,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionD[2] = -1; // Reset Player D's first token position
             grid[13][11] = 'r';
             printf("\nPlayer %c has killed the token of Player D\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         // tokens at index 3
@@ -306,7 +310,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionA[3] = -1; // Reset position for Player A first token
             grid[3][3] = 'w';
             printf("\nPlayer %c has killed the token of Player A\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 'h':
@@ -317,7 +321,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionB[3] = -1;
             grid[3][13] = 'h';
             printf("\nPlayer %c has killed the token of Player B\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 'g':
@@ -328,7 +332,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionC[3] = -1; // Reset Player C's first token position
             grid[13][3] = 'g';
             printf("\nPlayer %c has killed the token of Player C\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         case 't':
@@ -339,7 +343,7 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionD[3] = -1; // Reset Player D's first token position
             grid[13][13] = 't';
             printf("\nPlayer %c has killed the token of Player D\n", tokenChar);
-            return 0;
+            return 1;
             break;
 
         default:
@@ -466,6 +470,7 @@ void *gameThread(void *arg)
     int *currPosition = playerArgs->currPosition;
     char *tempTile = playerArgs->tempTile;
     int* tokenTowerPosition=playerArgs->tokenTowerPosition;
+    int killCount = playerArgs->killCount;
     
     //function call
     //moving Player to specific position
@@ -496,4 +501,3 @@ void *gameThread(void *arg)
     }
     return NULL;
 }
-

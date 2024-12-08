@@ -13,5 +13,8 @@ extern char tokenCharB[4];
 extern char tokenCharC[4];
 extern char tokenCharD[4];
 
+void movePlayerWithPathway(char tokenChar);
+void moveToken(int *currPosition, char *tempTile, char tokenChar, int* tokenTowerPosition, int steps);
+
 
 #endif // THREADS_H

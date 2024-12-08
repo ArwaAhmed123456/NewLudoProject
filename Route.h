@@ -13,6 +13,7 @@ extern int pathwayLength;
 
 void initializePathway();
 
+
 void RedPathUH();
 void RedPathDH();
 void RedMiddle();
