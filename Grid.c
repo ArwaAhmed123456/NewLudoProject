@@ -1,3 +1,4 @@
+//i222676_i222594_i222579_Project
 //g++ -o program Project.c whitePath.c Thread1.c
 #include <stdio.h>
 #include <stdlib.h>
