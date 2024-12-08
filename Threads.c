@@ -175,12 +175,13 @@ int tokenkill(int newRow, int newCol, int tokenChar)
         case 'a':
         if(*(tokenA[0].tempTile)=='S'||*(tokenA[0].tempTile)=='A'||*(tokenA[0].tempTile)=='B'||*(tokenA[0].tempTile)=='C'||*(tokenA[0].tempTile)=='D'||*(tokenA[0].tokenTowerPosition)>0)
         {return *(tokenA[0].tokenTowerPosition)+1;}
-        
             grid[newRow][newCol] = *(tokenA[0].tempTile);
             tokenA[0].tempTile = &tempA[0];
             currPositionA[0] = -1; // Reset position for Player A first token
             grid[1][1] = 'a';
             printf("\nPlayer %c has killed %c ,which is token of Player A\n", tokenChar,grid[newRow][newCol]);
+            ScoreA.deaths++;
+            ScoreA.Totalscore-=10;
             return 0;
             break;
 
@@ -227,6 +228,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionA[1] = -1; // Reset position for Player A first token
             grid[1][3] = 's';
             printf("\nPlayer %c has killed %c ,which is token of Player A\n", tokenChar,grid[newRow][newCol]);
+            ScoreA.deaths++;
+            ScoreA.Totalscore-=10;
             return 0;
             break;
 
@@ -238,6 +241,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionB[1] = -1;
             grid[1][13] = 'n';
             printf("\nPlayer %c has killed %c ,which is token of Player B\n", tokenChar,grid[newRow][newCol]);
+            ScoreB.deaths++;
+            ScoreB.Totalscore-=10;
             return 0;
             break;
 
@@ -249,6 +254,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionC[1] = -1; // Reset Player C's first token position
             grid[11][3] = 'v';
             printf("\nPlayer %c has killed %c ,which is token of Player C\n", tokenChar,grid[newRow][newCol]);
+            ScoreC.deaths++;
+            ScoreC.Totalscore-=10;
             return 0;
             break;
 
@@ -260,6 +267,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionD[1] = -1; // Reset Player D's first token position
             grid[11][13] = 'e';
             printf("\nPlayer %c has killed %c ,which is token of Player D\n", tokenChar,grid[newRow][newCol]);
+            ScoreD.deaths++;
+            ScoreD.Totalscore-=10;
             return 0;
             break;
 
@@ -272,6 +281,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionA[2] = -1; // Reset position for Player A first token
             grid[3][1] = 'q';
             printf("\nPlayer %c has killed %c ,which is token of Player A\n", tokenChar,grid[newRow][newCol]);
+            ScoreA.deaths++;
+            ScoreA.Totalscore-=10;
             return 0;
             break;
 
@@ -283,6 +294,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             currPositionB[2] = -1;
             grid[3][11] = 'j';
             printf("\nPlayer %c has killed %c ,which is token of Player B\n", tokenChar,grid[newRow][newCol]);
+            ScoreB.deaths++;
+            ScoreB.Totalscore-=10;
             return 0;
             break;
 
@@ -293,6 +306,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             tokenC[2].tempTile = &tempC[2];
             currPositionC[2] = -1; // Reset Player C's first token position
             grid[13][1] = 'f';
+            ScoreC.deaths++;
+            ScoreC.Totalscore-=10;
             printf("\nPlayer %c has killed %c ,which is token of Player C\n", tokenChar,grid[newRow][newCol]);
             return 0;
             break;
@@ -304,6 +319,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             tokenD[2].tempTile = &tempD[2];
             currPositionD[2] = -1; // Reset Player D's first token position
             grid[13][11] = 'r';
+            ScoreD.deaths++;
+            ScoreD.Totalscore-=10;
             printf("\nPlayer %c has killed %c ,which is token of Player D\n", tokenChar,grid[newRow][newCol]);
             return 0;
             break;
@@ -316,8 +333,9 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             tokenA[3].tempTile = &tempA[3];
             currPositionA[3] = -1; // Reset position for Player A first token
             grid[3][3] = 'w';
+            ScoreA.deaths++;
+            ScoreA.Totalscore-=10;
             printf("\nPlayer %c has killed %c ,which is token of Player B\n", tokenChar,grid[newRow][newCol]);
-
             return 0;
             break;
 
@@ -328,6 +346,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             tokenB[3].tempTile = &tempB[3]; // Reset position for Player B first token
             currPositionB[3] = -1;
             grid[3][13] = 'h';
+            ScoreB.deaths++;
+            ScoreB.Totalscore-=10;
             printf("\nPlayer %c has killed %c ,which is token of Player B\n", tokenChar,grid[newRow][newCol]);
             return 0;
             break;
@@ -339,6 +359,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             tokenC[3].tempTile = &tempC[3];
             currPositionC[3] = -1; // Reset Player C's first token position
             grid[13][3] = 'g';
+            ScoreC.deaths++;
+            ScoreC.Totalscore-=10;
             printf("\nPlayer %c has killed %c ,which is token of Player C\n", tokenChar,grid[newRow][newCol]);
             return 0;
             break;
@@ -350,6 +372,8 @@ int tokenkill(int newRow, int newCol, int tokenChar)
             tokenD[3].tempTile = &tempD[3];
             currPositionD[3] = -1; // Reset Player D's first token position
             grid[13][13] = 't';
+            ScoreD.deaths++;
+            ScoreD.Totalscore-=10;
             printf("\nPlayer %c has killed %c ,which is token of Player D\n", tokenChar,grid[newRow][newCol]);
             return 0;
             break;

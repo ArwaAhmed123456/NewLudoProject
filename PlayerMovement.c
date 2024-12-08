@@ -77,7 +77,7 @@ int isAllowedToEnterPath(int newRow, int newCol, char tokenChar)
 
 void movePlayerWithPathway(char tokenChar)
 {
-    if (tokenChar == 'a')
+    if (colorcheck(tokenChar,tokenCharA))
     {
        
         // for red tokens
@@ -100,7 +100,7 @@ void movePlayerWithPathway(char tokenChar)
         }
         // red should ends at (7, 5) in inner home
     }
-    else if (tokenChar == 'b')
+    else if (colorcheck(tokenChar,tokenCharB))
     {
         // for yellow tokens
         YellowPathDown();
@@ -122,7 +122,7 @@ void movePlayerWithPathway(char tokenChar)
             YellowMiddle();
         }
     }
-    else if (tokenChar == 'c')
+    else if (colorcheck(tokenChar,tokenCharC))
     {
         // for blue tokens
         BluePathUp();
@@ -143,7 +143,7 @@ void movePlayerWithPathway(char tokenChar)
           BlueMiddle();
         }
     }
-    else if (tokenChar == 'd')
+    else if (colorcheck(tokenChar,tokenCharD))
     {
         // for green tokens
         GreenPathDown();
@@ -169,11 +169,11 @@ void movePlayerWithPathway(char tokenChar)
 
 void displayStats()
 {
-    printf("\nToken a->currrposition:%d ,tokenChar:%c ,tempfile:%c ,towerPosition:%d\n",*(tokenA[0].currPosition),(tokenA[0].tokenChar),*(tokenA[0].tempTile),*(tokenA[0].tokenTowerPosition));
-    printf("\nToken b->currrposition:%d ,tokenChar:%c ,tempfile:%c ,towerPosition:%d\n",*(tokenB[0].currPosition),(tokenB[0].tokenChar),*(tokenB[0].tempTile),*(tokenB[0].tokenTowerPosition));
-    printf("\nToken c->currrposition:%d ,tokenChar:%c ,tempfile:%c ,towerPosition:%d\n",*(tokenC[0].currPosition),(tokenC[0].tokenChar),*(tokenC[0].tempTile),*(tokenC[0].tokenTowerPosition));
-    printf("\nToken d->currrposition:%d ,tokenChar:%c ,tempfile:%c ,towerPosition:%d\n",*(tokenD[0].currPosition),(tokenD[0].tokenChar),*(tokenD[0].tempTile),*(tokenD[0].tokenTowerPosition));
-    
+    printf("\n\nToken A->kills:%d ,deaths:%d ,Totalscore:%d\n",ScoreA.kills,ScoreA.deaths,ScoreA.Totalscore);
+    printf("\nToken B->kills:%d ,deaths:%d ,Totalscore:%d\n",ScoreB.kills,ScoreB.deaths,ScoreB.Totalscore);
+    printf("\nToken C->kills:%d ,deaths:%d ,Totalscore:%d\n",ScoreC.kills,ScoreC.deaths,ScoreC.Totalscore);    
+    printf("\nToken D->kills:%d ,deaths:%d ,Totalscore:%d\n\n",ScoreD.kills,ScoreD.deaths,ScoreD.Totalscore);
+
 }
 
 
@@ -393,10 +393,10 @@ void moveToken(int *currPosition, char *tempTile, char tokenChar, int* tokenTowe
         int kill = tokenkill(newRow, newCol, tokenChar);  // Only call once
         
         if(kill==-1){*tokenTowerPosition = 0;
-        if(colorcheck(tokenChar,tokenCharA)){ScoreA.kills++;}
-        else if(colorcheck(tokenChar,tokenCharB)){ScoreB.kills++;}
-        else if(colorcheck(tokenChar,tokenCharC)){ScoreC.kills++;}
-        else if(colorcheck(tokenChar,tokenCharD)){ScoreD.kills++;}
+        if(colorcheck(tokenChar,tokenCharA)){ScoreA.kills++;ScoreA.Totalscore+=10;}
+        else if(colorcheck(tokenChar,tokenCharB)){ScoreB.kills++;ScoreB.Totalscore+=10;}
+        else if(colorcheck(tokenChar,tokenCharC)){ScoreC.kills++;ScoreC.Totalscore+=10;}
+        else if(colorcheck(tokenChar,tokenCharD)){ScoreD.kills++;ScoreD.Totalscore+=10;}
         }
         else{*tokenTowerPosition = kill;} 
 
@@ -406,10 +406,10 @@ void moveToken(int *currPosition, char *tempTile, char tokenChar, int* tokenTowe
         grid[newRow][newCol] = tokenChar;
 
          // Use it to update tokenTowerPosition
-        printf("\n\n\tTopCheck:%d\tKill%d\n\n",TopCheck,kill);
+        //printf("\n\n\tTopCheck:%d\tKill%d\n\n",TopCheck,kill);
         displayStats();
         // Debugging: Check the value of kill
-        printf("tokenTowerPosition: %d\n", *tokenTowerPosition);
+        //printf("tokenTowerPosition: %d\n", *tokenTowerPosition);
 
         if (colorcheck(tokenChar,tokenCharA)&&ScoreA.kills>0||colorcheck(tokenChar,tokenCharB)&&ScoreB.kills>0||colorcheck(tokenChar,tokenCharC)&&ScoreC.kills>0||colorcheck(tokenChar,tokenCharD)&&ScoreD.kills>0) {
              // Token kill occurred, handle the post-kill logic
