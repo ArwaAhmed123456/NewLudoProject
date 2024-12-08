@@ -92,7 +92,7 @@ void movePlayerWithPathway(char tokenChar)
         BlueMiddle();
         BluePathUp();
         RedPathDH();
-        
+            printf("\nplayer A has kills:%d\n",ScoreA.kills);        
         if (ScoreA.kills){
             RedInnerPath();
         }else {
@@ -114,6 +114,7 @@ void movePlayerWithPathway(char tokenChar)
         RedMiddle();
         RedPathUH();
         YellowPathUp();
+        printf("\nplayer B has kills:%d\n",ScoreB.kills);
         // have to end in yellow home
         // need home inner path
         if (ScoreB.kills){
@@ -136,6 +137,7 @@ void movePlayerWithPathway(char tokenChar)
         GreenMiddle();
         GreenPathDown();
         BluePathDown();
+        printf("\nplayer C has kills:%d\n",ScoreC.kills);
         // have to add blue inner path
         if (ScoreC.kills){
           BlueInnerPath();
@@ -157,6 +159,7 @@ void movePlayerWithPathway(char tokenChar)
         YellowMiddle();
         YellowPathDown();
         GreenPathForward();
+        printf("\nplayer D has kills:%d\n",ScoreD.kills);
         // have to add green inner path
         if (ScoreD.kills){
            GreenInnerPath();
@@ -400,10 +403,7 @@ void moveToken(int *currPosition, char *tempTile, char tokenChar, int* tokenTowe
         }
         else{*tokenTowerPosition = kill;} 
 
-                // stores value of the tile before going to it's postion
-        *tempTile = grid[newRow][newCol];
-        // Place token at the new position
-        grid[newRow][newCol] = tokenChar;
+
 
          // Use it to update tokenTowerPosition
         //printf("\n\n\tTopCheck:%d\tKill%d\n\n",TopCheck,kill);
@@ -417,24 +417,30 @@ void moveToken(int *currPosition, char *tempTile, char tokenChar, int* tokenTowe
 }
 
          // Check if the player is entering an inner path that doesn't belong to them
-        if (colorcheck(tokenChar,tokenCharA)&&ScoreA.kills>0||colorcheck(tokenChar,tokenCharB)&&ScoreB.kills>0||colorcheck(tokenChar,tokenCharC)&&ScoreC.kills>0||colorcheck(tokenChar,tokenCharD)&&ScoreD.kills>0){
+        if ((colorcheck(tokenChar,tokenCharA)&&ScoreA.kills>0)||(colorcheck(tokenChar,tokenCharB)&&ScoreB.kills>0)||(colorcheck(tokenChar,tokenCharC)&&ScoreC.kills>0)||(colorcheck(tokenChar,tokenCharD)&&ScoreD.kills>0)){
               
           if (isAllowedToEnterPath(newRow, newCol, tokenChar)){
     
           printf("Player %c stays at position (%d, %d)\n", tokenChar, currentRow, currentCol);
-    
-    
-          printf("Player %c stays at position (%d, %d)\n", tokenChar, currentRow, currentCol);
-            
              // Correctly revert the position
            //*currPosition = (*currPosition - steps + pathwayLength) % pathwayLength;
-            
-  printf("AFTER: Player %c stays at position (%d, %d)\n", tokenChar, currentRow, currentCol);
+        
+        // stores value of the tile before going to it's postion
+        *tempTile = grid[newRow][newCol];
+        // Place token at the new position
+        grid[newRow][newCol] = tokenChar;
+
+            printf("AFTER: Player %c stays at position (%d, %d)\n", tokenChar, currentRow, currentCol);
             pthread_mutex_unlock(&lock);  // Unlock the mutex before returning
             return;  // Stop the function to prevent further movement
             }
         }
-        
+
+        // stores value of the tile before going to it's postion
+        *tempTile = grid[newRow][newCol];
+        // Place token at the new position
+        grid[newRow][newCol] = tokenChar;
+
         printf("Player %c moved to position (%d, %d)\n(for testing: tempTile:%c)\n", tokenChar, newRow, newCol, *tempTile);
 
      
