@@ -147,7 +147,7 @@ void initializeGrid() {
 }
 
 void displayGrid() {
-    //system("clear"); // Clear the console for a fresh grid display
+//system("clear"); // Clear the console for a fresh grid display
 
     for (int i = 0; i < 15; i++) {
         for (int j = 0; j < 15; j++) {

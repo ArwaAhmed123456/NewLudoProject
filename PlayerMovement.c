@@ -18,7 +18,7 @@ int isAllowedToEnterPath(int newRow, int newCol, char tokenChar)
 {
   // Red Inner Path is at row 7, columns 1-5
     if (newRow == 7 && newCol >= 1 && newCol <= 5) {
-        if (tokenChar == 'a') {  
+        if (colorcheck(tokenChar,tokenCharA)) {  
            if (RED_INNER_PATH_CHAR == '$'){
         // Only Red token ('a') is allowed
             return 1;
@@ -31,7 +31,7 @@ int isAllowedToEnterPath(int newRow, int newCol, char tokenChar)
     
      // Yellow Inner Path is at row 1-5, column 7
     if (newCol == 7 && newRow >= 1 && newRow <= 5) {
-        if (tokenChar == 'b') {  
+        if (colorcheck(tokenChar,tokenCharB)) {  
             if (YELLOW_INNER_PATH_CHAR == '+'){
         // Only Yellow token ('b') is allowed
             return 1;
@@ -48,7 +48,7 @@ int isAllowedToEnterPath(int newRow, int newCol, char tokenChar)
     // Blue Inner Path is at row 9-13, column 7
     // Green Inner Path is at row 7, columns 13 to 9 (in reverse order)
     if (newRow == 7 && newCol <= 13 && newCol >= 9) {
-        if (tokenChar == 'd') {  // Only Green token ('d') is allowed
+        if (colorcheck(tokenChar,tokenCharD)) {  // Only Green token ('d') is allowed
             if (GREEN_INNER_PATH_CHAR == '%') {
                 return 1; // Valid move
             }
@@ -62,7 +62,7 @@ int isAllowedToEnterPath(int newRow, int newCol, char tokenChar)
 
     // Blue Inner Path is at row 9-13, column 7
     if (newCol == 7 && newRow >= 9 && newRow <= 13) {
-        if (tokenChar == 'c') {  
+        if (colorcheck(tokenChar,tokenCharC)) {  
             if (BLUE_INNER_PATH_CHAR == '@'){
             // Only Blue token ('c') is allowed
             return 1;
@@ -394,15 +394,16 @@ void moveToken(int *currPosition, char *tempTile, char tokenChar, int* tokenTowe
         int newCol = pathway[*currPosition][1];
         
         
-        int kill = tokenkill(newRow, newCol, tokenChar);  // Only call once
+        int killcheck = tokenkill(newRow, newCol, tokenChar);  // Only call once
         
-        if(kill==-1){*tokenTowerPosition = 0;
+        if(killcheck==0){*tokenTowerPosition = 0;
         if(colorcheck(tokenChar,tokenCharA)){ScoreA.kills++;ScoreA.Totalscore+=10;}
         else if(colorcheck(tokenChar,tokenCharB)){ScoreB.kills++;ScoreB.Totalscore+=10;}
         else if(colorcheck(tokenChar,tokenCharC)){ScoreC.kills++;ScoreC.Totalscore+=10;}
         else if(colorcheck(tokenChar,tokenCharD)){ScoreD.kills++;ScoreD.Totalscore+=10;}
         }
-        else{*tokenTowerPosition = kill;} 
+        else if(killcheck==-1){*tokenTowerPosition = 0;}
+        else{*tokenTowerPosition = killcheck;} 
 
 
 
